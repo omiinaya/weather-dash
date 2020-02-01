@@ -1,4 +1,4 @@
-var queryURL = "api.openweathermap.org/data/2.5/weather?q=London&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
+var queryURL = "https://api.openweathermap.org/data/2.5/weather?id=2172797&appid=5495b7f13ab5bdde931c6f4d218ed2e4"
 
 
 $.ajax({
