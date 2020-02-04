@@ -1,10 +1,7 @@
-ul {
+ul > li {
+    display: inline-block;
     list-style-type: none;
-    display: inline;
-}
-li {
     padding: 5px;
-    float:left;
 }
 .forecast {
     background-color: lightblue;
