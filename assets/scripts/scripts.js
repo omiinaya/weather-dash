@@ -18,15 +18,19 @@ var date5 = "";
 var arrHistory = [];
 
 function getUserInput() {
+  //gets user input and capitalizes the first letter of each word.
   locName = $("#user-input").val();
   fixInput()
 
+  //run the functions that get our coordinates and location id.
   getCoordinates()
   getLocationId()
 
+  //API URLs crafted using the coordinates and location ids we got from before.
   queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?id="+locId+"&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
   queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat="+locLat+"&lon="+locLon+"&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
   
+  //run our forecast, uv, and history functions.
   ajaxForecast()
   ajaxUV()
   updateHistory()
@@ -64,6 +68,7 @@ function getLocationId() {
     }
   }
 }
+//gets forecast data from the API in JSON format.
 function ajaxForecast(){
   if (locId) {
     $.ajax({
@@ -72,6 +77,7 @@ function ajaxForecast(){
     }).then(function(response) {
       console.log(response);
       $("#cityName").text(fixedName)
+      //pull dt_txts from each index to use in fixDate()
       dt1 = response.list[0].dt_txt;
       dt2 = response.list[8].dt_txt;
       dt3 = response.list[16].dt_txt;
@@ -106,6 +112,7 @@ function ajaxForecast(){
     });
   }
 }
+//gets UV data from API in JSON format.
 function ajaxUV(){
   if (locName) {
     $.ajax({
@@ -121,6 +128,7 @@ function ajaxUV(){
     });
   }
 }
+//updates history and places it on the left side of the page.
 function updateHistory() {
   arrHistory = arrHistory.concat(fixedName);
   console.log(arrHistory)
