@@ -1,3 +1,14 @@
+h3 {
+    width:90;
+    text-align: center;
+}
+.container {
+    margin: auto;
+}
+.weather {
+    width: 90%;
+    text-align: center;
+}
 ul > li {
     display: inline-block;
     list-style-type: none;
@@ -6,4 +17,8 @@ ul > li {
 .forecast {
     background-color: lightblue;
     width: 100%;
+}
+.history {
+    float: left;
+    width: 10%;
 }

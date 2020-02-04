@@ -2,7 +2,7 @@ var locId = "";
 var locName = "";
 var locLon = "";
 var locLat = "";
-var arrHistory = [];
+
 var dt = "";
 var dt2 = "";
 var dt3 = "";
@@ -13,6 +13,8 @@ var date2 = "";
 var date3 = "";
 var date4 = "";
 var date5 = "";
+
+var arrHistory = [];
 
 function getUserInput() {
   locName = $("#user-input").val();
@@ -25,6 +27,8 @@ function getUserInput() {
   ajaxForecast()
   ajaxUV()
   updateHistory()
+
+  $("#history").append("History:")
 }
 function getCoordinates() {
   for (var i=0; i<jsonData.length; i++) {
@@ -109,4 +113,5 @@ function ajaxUV(){
 function updateHistory() {
   arrHistory = arrHistory.concat(locName);
   console.log(arrHistory)
+  $("#updateHistory").append("<br>"+locName)
 }
