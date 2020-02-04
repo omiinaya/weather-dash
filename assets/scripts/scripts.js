@@ -20,6 +20,7 @@ var arrHistory = [];
 function getUserInput() {
   locName = $("#user-input").val();
   fixInput()
+
   getCoordinates()
   getLocationId()
 
@@ -32,10 +33,13 @@ function getUserInput() {
 
   $("#history").append("History:")
 }
+//capitalizes the first letter of each word provided by the user.
 function fixInput() {
-  fixedName = locName.charAt(0).toUpperCase() + locName.slice(1);
-  console.log(fixedName);
+    fixedName = locName.split(' ').map(eachWord=>
+      eachWord.charAt(0).toUpperCase() + eachWord.slice(1)
+    ).join(' ');
 }
+//removes hours from the date provided by the API.
 function fixDate() {
   date = dt.substring(0,10);
   date2 = dt2.substring(0,10);
@@ -43,6 +47,7 @@ function fixDate() {
   date4 = dt4.substring(0,10);
   date5 = dt5.substring(0,10);
 }
+//pulls coordinates from our data.js file.
 function getCoordinates() {
   for (var i=0; i<jsonData.length; i++) {
     if (jsonData[i].name == fixedName) {
@@ -51,6 +56,7 @@ function getCoordinates() {
     }
   }
 }
+//pulls locationids from our data.js file.
 function getLocationId() {
   for (var i=0; i<jsonData.length; i++) {
     if (jsonData[i].name == fixedName) {
@@ -65,8 +71,7 @@ function ajaxForecast(){
       method: "GET"
     }).then(function(response) {
       console.log(response);
-      //remove time from date
-      $("#cityName").text(locName)
+      $("#cityName").text(fixedName)
       dt = response.list[0].dt_txt;
       dt2 = response.list[8].dt_txt;
       dt3 = response.list[16].dt_txt;
@@ -117,7 +122,7 @@ function ajaxUV(){
   }
 }
 function updateHistory() {
-  arrHistory = arrHistory.concat(locName);
+  arrHistory = arrHistory.concat(fixedName);
   console.log(arrHistory)
-  $("#updateHistory").append("<br>"+locName)
+  $("#updateHistory").append("<br>"+fixedName)
 }
