@@ -3,20 +3,18 @@ var month = d.getMonth()+1
 var nd = month+"/"+d.getDate()+"/"+ d.getYear()
 var locId = "";
 var locName = "";
-var queryURL = "";
-var queryURL2 = "";
 var locLon = "";
 var locLat = "";
 
 function getUserInput() {
-  locName = $("#user-input").val()
+  locName = $("#user-input").val();
+  getCoordinates()
+  getLocationId()
+
   queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+locName+"&appid=5495b7f13ab5bdde931c6f4d218ed2e4"
   queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?id="+locId+"&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
   queryURL3 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat="+locLat+"&lon="+locLon+"&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
   
-  getLocationId()
-  getCoordinates()
-//ajaxWeather()
   ajaxForecast()
   ajaxUV()
 }
@@ -34,7 +32,26 @@ function getLocationId() {
       locId = jsonData[i].id;
     }
   }
-  console.log(locId);
+}
+function ajaxForecast(){
+  if (locId) {
+    $.ajax({
+      url: queryURL2,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response);
+      console.log(response.list[0].main.temp);
+    });
+  }
+}
+function ajaxUV(){
+  if (locName) {
+    $.ajax({
+      url: queryURL3,
+      method: "GET"
+    }).then(function(response) {
+    });
+  }
 }
 function ajaxWeather(){
   if (locName) {
@@ -49,25 +66,6 @@ function ajaxWeather(){
       $("#humidity").text("Humidity: "+response.main.humidity)
       $("#speed").text("Wind Speed: "+response.wind.speed)
       $("#uv").text("UV Index: "+response.wind.speed)
-    });
-  }
-}
-function ajaxUV(){
-  if (locName) {
-    $.ajax({
-      url: queryURL3,
-      method: "GET"
-    }).then(function(response) {
-    });
-  }
-}
-function ajaxForecast(){
-  if (locId) {
-    $.ajax({
-      url: queryURL2,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response);
     });
   }
 }
