@@ -16,7 +16,7 @@ function getUserInput() {
   
   getLocationId()
   getCoordinates()
-  ajaxWeather()
+//ajaxWeather()
   ajaxForecast()
   ajaxUV()
 }
@@ -27,8 +27,6 @@ function getCoordinates() {
       locLat = jsonData[i].coord.lat;
     }
   }
-  console.log(locLon);
-  console.log(locLat);
 }
 function getLocationId() {
   for (var i=0; i<jsonData.length; i++) {
@@ -60,7 +58,6 @@ function ajaxUV(){
       url: queryURL3,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
     });
   }
 }
