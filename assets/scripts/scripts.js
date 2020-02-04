@@ -1,6 +1,3 @@
-var d = new Date();
-var month = d.getMonth()+1
-var nd = month+"/"+d.getDate()+"/"+ d.getYear()
 var locId = "";
 var locName = "";
 var locLon = "";
@@ -40,7 +37,41 @@ function ajaxForecast(){
       method: "GET"
     }).then(function(response) {
       console.log(response);
-      console.log(response.list[0].main.temp);
+      //day1
+      $("#city1").text("City: "+locName)
+      $("#date1").text("Date: "+response.list[0].dt_txt)
+      $("#temperature1").text("Temperature: "+response.list[0].main.temp)
+      $("#humidity1").text("Humidity: "+response.list[0].main.humidity)
+      $("#speed1").text("Wind Speed: "+response.list[0].wind.speed)
+      $("#uv1").text("UV Index: "+response.list[0].wind.speed)
+      //day2
+      $("#city2").text("City: "+locName)
+      $("#date2").text("Date: "+response.list[8].dt_txt)
+      $("#temperature2").text("Temperature: "+response.list[8].main.temp)
+      $("#humidity2").text("Humidity: "+response.list[8].main.humidity)
+      $("#speed2").text("Wind Speed: "+response.list[8].wind.speed)
+      $("#uv2").text("UV Index: "+response.list[8].wind.speed)
+      //day3
+      $("#city3").text("City: "+locName)
+      $("#date3").text("Date: "+response.list[16].dt_txt)
+      $("#temperature3").text("Temperature: "+response.list[16].main.temp)
+      $("#humidity3").text("Humidity: "+response.list[16].main.humidity)
+      $("#speed3").text("Wind Speed: "+response.list[16].wind.speed)
+      $("#uv3").text("UV Index: "+response.list[16].wind.speed)
+      //day4
+      $("#city4").text("City: "+locName)
+      $("#date4").text("Date: "+response.list[24].dt_txt)
+      $("#temperature4").text("Temperature: "+response.list[24].main.temp)
+      $("#humidity4").text("Humidity: "+response.list[24].main.humidity)
+      $("#speed4").text("Wind Speed: "+response.list[24].wind.speed)
+      $("#uv4").text("UV Index: "+response.list[24].wind.speed)
+      //day5
+      $("#city5").text("City: "+locName)
+      $("#date5").text("Date: "+response.list[32].dt_txt)
+      $("#temperature5").text("Temperature: "+response.list[32].main.temp)
+      $("#humidity5").text("Humidity: "+response.list[32].main.humidity)
+      $("#speed5").text("Wind Speed: "+response.list[32].wind.speed)
+      $("#uv5").text("UV Index: "+response.list[32].wind.speed)
     });
   }
 }
