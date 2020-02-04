@@ -37,12 +37,14 @@ function getUserInput() {
 
   $("#history").append("History:")
 }
+
 //capitalizes the first letter of each word provided by the user.
 function fixInput() {
     fixedName = locName.split(' ').map(eachWord=>
       eachWord.charAt(0).toUpperCase() + eachWord.slice(1)
     ).join(' ');
 }
+
 //removes hours from the date provided by the API.
 function fixDate() {
   date1 = dt1.substring(0,10);
@@ -51,6 +53,7 @@ function fixDate() {
   date4 = dt4.substring(0,10);
   date5 = dt5.substring(0,10);
 }
+
 //pulls coordinates from our data.js file.
 function getCoordinates() {
   for (var i=0; i<jsonData.length; i++) {
@@ -60,6 +63,7 @@ function getCoordinates() {
     }
   }
 }
+
 //pulls locationids from our data.js file.
 function getLocationId() {
   for (var i=0; i<jsonData.length; i++) {
@@ -68,6 +72,7 @@ function getLocationId() {
     }
   }
 }
+
 //gets forecast data from the API in JSON format.
 function ajaxForecast(){
   if (locId) {
@@ -112,6 +117,7 @@ function ajaxForecast(){
     });
   }
 }
+
 //gets UV data from API in JSON format.
 function ajaxUV(){
   if (locName) {
@@ -128,6 +134,7 @@ function ajaxUV(){
     });
   }
 }
+
 //updates history and places it on the left side of the page.
 function updateHistory() {
   arrHistory = arrHistory.concat(fixedName);
