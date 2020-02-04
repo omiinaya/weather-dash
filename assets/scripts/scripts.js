@@ -1,5 +1,6 @@
 var locId = "";
 var locName = "";
+var fixedName = "";
 var locLon = "";
 var locLat = "";
 
@@ -18,6 +19,7 @@ var arrHistory = [];
 
 function getUserInput() {
   locName = $("#user-input").val();
+  fixInput()
   getCoordinates()
   getLocationId()
 
@@ -30,20 +32,9 @@ function getUserInput() {
 
   $("#history").append("History:")
 }
-function getCoordinates() {
-  for (var i=0; i<jsonData.length; i++) {
-    if (jsonData[i].name == locName) {
-      locLon = jsonData[i].coord.lon;
-      locLat = jsonData[i].coord.lat;
-    }
-  }
-}
-function getLocationId() {
-  for (var i=0; i<jsonData.length; i++) {
-    if (jsonData[i].name == locName) {
-      locId = jsonData[i].id;
-    }
-  }
+function fixInput() {
+  fixedName = locName.charAt(0).toUpperCase() + locName.slice(1);
+  console.log(fixedName);
 }
 function fixDate() {
   date = dt.substring(0,10);
@@ -51,6 +42,21 @@ function fixDate() {
   date3 = dt3.substring(0,10);
   date4 = dt4.substring(0,10);
   date5 = dt5.substring(0,10);
+}
+function getCoordinates() {
+  for (var i=0; i<jsonData.length; i++) {
+    if (jsonData[i].name == fixedName) {
+      locLon = jsonData[i].coord.lon;
+      locLat = jsonData[i].coord.lat;
+    }
+  }
+}
+function getLocationId() {
+  for (var i=0; i<jsonData.length; i++) {
+    if (jsonData[i].name == fixedName) {
+      locId = jsonData[i].id;
+    }
+  }
 }
 function ajaxForecast(){
   if (locId) {
