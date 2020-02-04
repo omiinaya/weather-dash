@@ -41,7 +41,7 @@ function fixInput() {
 }
 //removes hours from the date provided by the API.
 function fixDate() {
-  date = dt.substring(0,10);
+  date1 = dt1.substring(0,10);
   date2 = dt2.substring(0,10);
   date3 = dt3.substring(0,10);
   date4 = dt4.substring(0,10);
@@ -72,14 +72,14 @@ function ajaxForecast(){
     }).then(function(response) {
       console.log(response);
       $("#cityName").text(fixedName)
-      dt = response.list[0].dt_txt;
+      dt1 = response.list[0].dt_txt;
       dt2 = response.list[8].dt_txt;
       dt3 = response.list[16].dt_txt;
       dt4 = response.list[24].dt_txt;
       dt5 = response.list[32].dt_txt;
       fixDate()
       //day1
-      $("#date1").text("Date: "+date)
+      $("#date1").text("Date: "+date1)
       $("#temperature1").text("Temperature: "+response.list[0].main.temp)
       $("#humidity1").text("Humidity: "+response.list[0].main.humidity)
       $("#speed1").text("Wind Speed: "+response.list[0].wind.speed)
@@ -124,5 +124,5 @@ function ajaxUV(){
 function updateHistory() {
   arrHistory = arrHistory.concat(fixedName);
   console.log(arrHistory)
-  $("#updateHistory").append("<br>"+fixedName)
+  $("#updateHistory").append("<li>"+fixedName)
 }
