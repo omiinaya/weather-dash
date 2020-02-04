@@ -43,7 +43,6 @@ function ajaxForecast(){
       $("#temperature1").text("Temperature: "+response.list[0].main.temp)
       $("#humidity1").text("Humidity: "+response.list[0].main.humidity)
       $("#speed1").text("Wind Speed: "+response.list[0].wind.speed)
-      $("#uv1").text("UV Index: "+response.list[0].wind.speed)
       //day2
       $("#city2").text("City: "+locName)
       $("#date2").text("Date: "+response.list[8].dt_txt)
@@ -81,6 +80,12 @@ function ajaxUV(){
       url: queryURL3,
       method: "GET"
     }).then(function(response) {
+      console.log(response)
+      $("#uv1").text("UV Index: "+response[0].value)
+      $("#uv2").text("UV Index: "+response[1].value)
+      $("#uv3").text("UV Index: "+response[2].value)
+      $("#uv4").text("UV Index: "+response[3].value)
+      $("#uv5").text("UV Index: "+response[4].value)
     });
   }
 }
