@@ -23,9 +23,8 @@ var arrHistory = [];
 var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
 function pageLoad() {
-  getLocation()
+  loadLocal()
   enterKey()
-  testAlert()
 }
 
 function setUserInput() {
@@ -103,13 +102,25 @@ function ajaxForecast() {
 function ajaxUV() {
   var queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + locLat + "&lon=" + locLon + "&APPID=" + key;
   $.ajax({
-      url: queryURL2,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response)
-      uvData = response;
-    });
-  }
+    url: queryURL2,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response)
+    uvData = response;
+  });
+}
+
+function ajaxNearMe() {
+  var queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&units=imperial&appid=" + key;
+  $.ajax({
+    url: queryURL3,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response)
+    foreData = response;
+    passData();
+});
+}
 
 function passData() {
   $("#cityName").text(fixedName)
@@ -155,9 +166,9 @@ function passData() {
 
 //testing li on click functionality.
 function testAlert() {
-  $('[id^="history"]').on("click", function () {
-    locName = $(this).attr('value');
-    runSearch()
+  $('[id^="history"]').mousedown(function () {
+    var loadCity = $(this).text();
+    window.open("file:///C:/Users/Mr.X/Desktop/weather-dash/index.html?q="+loadCity);
   });
 }
 
@@ -175,31 +186,50 @@ function enterKey() {
 
 //updates history and places it on the left side of the page.
 function updateHistory() {
-  arraySize = arrHistory.length;
   arrHistory.push(fixedName);
-  console.log(arrHistory);
-  $("#updateHistory").append("<li id=history" + arraySize + " value=" + fixedName + ">" + fixedName + "</li>");
-  testAlert();
-}
-
-function getLocation() {
-  navigator.geolocation.getCurrentPosition(showPosition);
+  arraySize = arrHistory.length;
+  for (var i=0; i<arraySize;i++) {
+    $("#history"+i+"").text(arrHistory[i])
+    localStorage.setItem(""+i+"",$("#history"+i+"").text());
+  }
 }
 
 function showPosition(position) {
-  // Grab coordinates from the given object
+  $("#cityName").text("Current Location: ");
   locLat = position.coords.latitude;
   locLon = position.coords.longitude;
   ajaxUV()
-  var queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&units=imperial&appid=" + key;
-  console.log("Your coordinates are Latitude: " + locLat + " Longitude " + locLon);
-  console.log(queryURL3);
-  $.ajax({
-    url: queryURL3,
-    method: "GET"
-  }).then(function (response) {
-    console.log(response)
-    foreData = response;
-    passData();
-  });
+  ajaxNearMe()
+  //arrHistory.push("Miami");
+  //$("#history0").text("Miami");
 }
+
+function loadLocal() {
+  for (var i = 0; i < localStorage.length; i++){
+    $("#history"+i+"").append(localStorage.getItem(localStorage.key(i)));
+  }
+  testAlert()
+}
+
+//Experimental
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+// Give the parameter a variable name
+var dynamicContent = getParameterByName('q');
+
+$(document).ready(function() {
+
+if (dynamicContent) {
+  locName = dynamicContent;
+  runSearch();
+  } else {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+});
