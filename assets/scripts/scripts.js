@@ -5,6 +5,7 @@ var locLon;
 var locLat;
 var foreData;
 var uvData;
+var arraySize;
 
 var dt;
 var dt2;
@@ -19,13 +20,21 @@ var date5;
 
 var arrHistory = [];
 
+var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
+
 function pageLoad() {
+  getLocation()
   enterKey()
+  testAlert()
 }
 
-function getUserInput() {
-  //gets user input and capitalizes the first letter of each word.
+function setUserInput() {
   locName = $("#user-input").val();
+  runSearch()
+}
+
+function runSearch() {
+  //gets user input and capitalizes the first letter of each word.
   fixInput()
 
   //run the functions that get our coordinates and location id.
@@ -33,15 +42,13 @@ function getUserInput() {
   getLocationId()
 
   //API URLs crafted using the coordinates and location ids we got from before.
-  queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?id=" + locId + "&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
-  queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + locLat + "&lon=" + locLon + "&APPID=5495b7f13ab5bdde931c6f4d218ed2e4"
+  queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?id=" + locId + "&APPID=" + key;
+  queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + locLat + "&lon=" + locLon + "&APPID=" + key;
 
   //run our forecast, uv, and history functions.
   ajaxForecast()
   ajaxUV()
   updateHistory()
-
-  $("#history").append("History:")
 }
 
 //capitalizes the first letter of each word provided by the user.
@@ -148,24 +155,60 @@ function passData() {
   $("#uv5").text("UV Index: " + uvData[4].value)
 }
 
+//testing li on click functionality.
 function testAlert() {
-  alert("test");
+  $('[id^="history"]').on("click", function () {
+    locName = $(this).attr('value');
+    runSearch()
+  });
 }
 
-function enterKey(){
+//allows searching by enter key.
+function enterKey() {
   var enterText = document.getElementById("user-input");
-  enterText.addEventListener("keyup", function(event) {
-    if (event.keyCode===13) {
+  enterText.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
       event.preventDefault();
       locName = $("#user-input").val();
-      getUserInput()
+      runSearch()
     }
   });
 }
 
 //updates history and places it on the left side of the page.
 function updateHistory() {
-  arrHistory = arrHistory.concat(fixedName);
-  console.log(arrHistory)
-  $("#updateHistory").append("<li onclick='testAlert()'>" + fixedName)
+  arraySize = arrHistory.length;
+  arrHistory.push(fixedName);
+  console.log(arrHistory);
+  $("#updateHistory").append("<li id=history" + arraySize + " value=" + fixedName + ">" + fixedName + "</li>");
+  testAlert();
+}
+
+function getLocation() {
+  // Make sure browser supports this feature
+  if (navigator.geolocation) {
+    // Provide our showPosition() function to getCurrentPosition
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+  else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  // Grab coordinates from the given object
+  locLat = position.coords.latitude;
+  locLon = position.coords.longitude;
+  var queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&units=imperial&appid=" + key;
+  console.log("Your coordinates are Latitude: " + locLat + " Longitude " + locLon);
+  console.log(queryURL3);
+  $.ajax({
+    url: queryURL3,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response)
+    foreData = response;
+    ajaxUV()
+    passData();
+  });
 }

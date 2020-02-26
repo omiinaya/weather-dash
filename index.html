@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
     <script src="assets/scripts/data.js"></script>
     <script src="assets/scripts/scripts.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
+
 <body onload="pageLoad()">
     <div>
         <input type="text" id="user-input">
-        <button onclick="getUserInput()">Submit</button>
+        <button onclick="setUserInput()">Submit</button>
     </div>
     <p id="cityName">City: </p>
     <div class="history">
-        <ul id="updateHistory"></ul>
+        <ul id="updateHistory">
+            <li id="history"></li>
+        </ul>
     </div>
     <div class="container">
         <div class="weather">
@@ -72,4 +76,5 @@
         </div>
     </div>
 </body>
+
 </html>
