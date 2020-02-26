@@ -43,7 +43,6 @@ function runSearch() {
 
   //API URLs crafted using the coordinates and location ids we got from before.
   queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?id=" + locId + "&APPID=" + key;
-  queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + locLat + "&lon=" + locLon + "&APPID=" + key;
 
   //run our forecast, uv, and history functions.
   ajaxForecast()
@@ -102,8 +101,8 @@ function ajaxForecast() {
 
 //gets UV data from API in JSON format.
 function ajaxUV() {
-  if (locName) {
-    $.ajax({
+  var queryURL2 = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + locLat + "&lon=" + locLon + "&APPID=" + key;
+  $.ajax({
       url: queryURL2,
       method: "GET"
     }).then(function (response) {
@@ -111,7 +110,6 @@ function ajaxUV() {
       uvData = response;
     });
   }
-}
 
 function passData() {
   $("#cityName").text(fixedName)
@@ -185,20 +183,14 @@ function updateHistory() {
 }
 
 function getLocation() {
-  // Make sure browser supports this feature
-  if (navigator.geolocation) {
-    // Provide our showPosition() function to getCurrentPosition
-    navigator.geolocation.getCurrentPosition(showPosition);
-  }
-  else {
-    alert("Geolocation is not supported by this browser.");
-  }
+  navigator.geolocation.getCurrentPosition(showPosition);
 }
 
 function showPosition(position) {
   // Grab coordinates from the given object
   locLat = position.coords.latitude;
   locLon = position.coords.longitude;
+  ajaxUV()
   var queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&units=imperial&appid=" + key;
   console.log("Your coordinates are Latitude: " + locLat + " Longitude " + locLon);
   console.log(queryURL3);
@@ -208,7 +200,6 @@ function showPosition(position) {
   }).then(function (response) {
     console.log(response)
     foreData = response;
-    ajaxUV()
     passData();
   });
 }
