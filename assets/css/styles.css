@@ -22,3 +22,6 @@ ul > li {
     float: left;
     width: 10%;
 }
+#updateHistory:hover {
+    cursor: pointer;
+}
