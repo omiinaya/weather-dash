@@ -22,7 +22,7 @@ var arrHistory = [];
 var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
 function pageLoad() {
-  getLocal()
+  loadLocal()
   enterKey()
 }
 
@@ -168,10 +168,10 @@ function passData() {
 }
 
 //testing li on click functionality.
-function testAlert() {
-  $('[id^="history"]').mousedown(function () {
-    var loadCity = $(this).text();
-    window.open("file:///C:/Users/Mr.X/Desktop/weather-dash/index.html?q="+loadCity);
+function historyClick() {
+  $('[id^="history"]').on("click", function () {
+    locName = $(this).text();
+    runSearch();
   });
 }
 
@@ -194,12 +194,14 @@ function addLocal() {
   console.log(count);
   localStorage.setItem(count, fixedName);
   count++;
+  historyClick()
 }
 
-function getLocal() {
+function loadLocal() {
   for (var i=0; i<localStorage.length; i++) {
   $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
   }
+  historyClick()
 }
 
 function showPosition(position) {
