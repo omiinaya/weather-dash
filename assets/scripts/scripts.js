@@ -118,11 +118,11 @@ function ajaxNearMe() {
   }).then(function (response) {
     console.log(response)
     foreData = response;
-    passData();
     locName = response.city.name
     fixInput()
     $("#cityName").text(fixedName);
     addLocal()
+    passData()
 });
 }
 
@@ -190,6 +190,7 @@ function enterKey() {
       event.preventDefault();
       locName = $("#user-input").val();
       runSearch()
+      loadLocal()
       addLocal()
     }
   });
@@ -199,8 +200,9 @@ function enterKey() {
 function addLocal() {
   var count = localStorage.length;
   console.log(count);
-  localStorage.setItem(count, fixedName);
   count++;
+  localStorage.setItem(count, fixedName);
+  loadLocal()
   historyClick()
 }
 
