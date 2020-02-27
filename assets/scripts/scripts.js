@@ -22,6 +22,7 @@ var arrHistory = [];
 var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
 function pageLoad() {
+  geolocate() 
   loadLocal()
   enterKey()
 }
@@ -188,7 +189,7 @@ function enterKey() {
   });
 }
 
-//updates history and places it on the left side of the page.
+//adds new items to history and activates clicking on history items.
 function addLocal() {
   var count = localStorage.length;
   console.log(count);
@@ -197,11 +198,16 @@ function addLocal() {
   historyClick()
 }
 
+//loads all items in localData and activates clicking on history items.
 function loadLocal() {
   for (var i=0; i<localStorage.length; i++) {
   $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
   }
   historyClick()
+}
+
+function geolocate() {
+  navigator.geolocation.getCurrentPosition(showPosition);
 }
 
 function showPosition(position) {
@@ -210,26 +216,3 @@ function showPosition(position) {
   ajaxUV()
   ajaxNearMe()
 }
-
-//Experimental
-function getParameterByName(name, url) {
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-// Give the parameter a variable name
-var dynamicContent = getParameterByName('q');
-
-$(document).ready(function() {
-
-if (dynamicContent) {
-  locName = dynamicContent;
-  runSearch();
-  } else {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  }
-});
