@@ -5,7 +5,6 @@ var locLon;
 var locLat;
 var foreData;
 var uvData;
-var arraySize;
 
 var dt;
 var dt2;
@@ -23,13 +22,14 @@ var arrHistory = [];
 var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
 function pageLoad() {
-  loadLocal()
+  getLocal()
   enterKey()
 }
 
 function setUserInput() {
   locName = $("#user-input").val();
   runSearch()
+  addLocal()
 }
 
 function runSearch() {
@@ -46,7 +46,6 @@ function runSearch() {
   //run our forecast, uv, and history functions.
   ajaxForecast()
   ajaxUV()
-  updateHistory()
 }
 
 //capitalizes the first letter of each word provided by the user.
@@ -119,6 +118,10 @@ function ajaxNearMe() {
     console.log(response)
     foreData = response;
     passData();
+    locName = response.city.name
+    fixInput()
+    $("#cityName").text(fixedName);
+    addLocal()
 });
 }
 
@@ -180,35 +183,30 @@ function enterKey() {
       event.preventDefault();
       locName = $("#user-input").val();
       runSearch()
+      addLocal()
     }
   });
 }
 
 //updates history and places it on the left side of the page.
-function updateHistory() {
-  arrHistory.push(fixedName);
-  arraySize = arrHistory.length;
-  for (var i=0; i<arraySize;i++) {
-    $("#history"+i+"").text(arrHistory[i])
-    localStorage.setItem(""+i+"",$("#history"+i+"").text());
+function addLocal() {
+  var count = localStorage.length;
+  console.log(count);
+  localStorage.setItem(count, fixedName);
+  count++;
+}
+
+function getLocal() {
+  for (var i=0; i<localStorage.length; i++) {
+  $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
   }
 }
 
 function showPosition(position) {
-  $("#cityName").text("Current Location: ");
   locLat = position.coords.latitude;
   locLon = position.coords.longitude;
   ajaxUV()
   ajaxNearMe()
-  //arrHistory.push("Miami");
-  //$("#history0").text("Miami");
-}
-
-function loadLocal() {
-  for (var i = 0; i < localStorage.length; i++){
-    $("#history"+i+"").append(localStorage.getItem(localStorage.key(i)));
-  }
-  testAlert()
 }
 
 //Experimental
