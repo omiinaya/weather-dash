@@ -134,28 +134,34 @@ function passData() {
   dt3 = foreData.list[16].dt_txt;
   dt4 = foreData.list[24].dt_txt;
   dt5 = foreData.list[32].dt_txt;
+
   fixDate()
   //day1
+  $("#icon1").attr("src", "http://openweathermap.org/img/wn/"+foreData.list[0].weather[0].icon+"@2x.png")
   $("#date1").text("Date: " + date1)
   $("#temperature1").text("Temperature: " + foreData.list[0].main.temp)
   $("#humidity1").text("Humidity: " + foreData.list[0].main.humidity)
   $("#speed1").text("Wind Speed: " + foreData.list[0].wind.speed)
   //day2
+  $("#icon2").attr("src", "http://openweathermap.org/img/wn/"+foreData.list[8].weather[0].icon+"@2x.png")
   $("#date2").text("Date: " + date2)
   $("#temperature2").text("Temperature: " + foreData.list[8].main.temp)
   $("#humidity2").text("Humidity: " + foreData.list[8].main.humidity)
   $("#speed2").text("Wind Speed: " + foreData.list[8].wind.speed)
   //day3
+  $("#icon3").attr("src", "http://openweathermap.org/img/wn/"+foreData.list[16].weather[0].icon+"@2x.png")
   $("#date3").text("Date: " + date3)
   $("#temperature3").text("Temperature: " + foreData.list[16].main.temp)
   $("#humidity3").text("Humidity: " + foreData.list[16].main.humidity)
   $("#speed3").text("Wind Speed: " + foreData.list[16].wind.speed)
   //day4
+  $("#icon4").attr("src", "http://openweathermap.org/img/wn/"+foreData.list[24].weather[0].icon+"@2x.png")
   $("#date4").text("Date: " + date4)
   $("#temperature4").text("Temperature: " + foreData.list[24].main.temp)
   $("#humidity4").text("Humidity: " + foreData.list[24].main.humidity)
   $("#speed4").text("Wind Speed: " + foreData.list[24].wind.speed)
   //day5
+  $("#icon5").attr("src", "http://openweathermap.org/img/wn/"+foreData.list[32].weather[0].icon+"@2x.png")
   $("#date5").text("Date: " + date5)
   $("#temperature5").text("Temperature: " + foreData.list[32].main.temp)
   $("#humidity5").text("Humidity: " + foreData.list[32].main.humidity)
