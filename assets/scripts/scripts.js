@@ -23,7 +23,6 @@ var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
 function pageLoad() {
   geolocate() 
-  loadLocal()
   enterKey()
 }
 
@@ -223,4 +222,5 @@ function showPosition(position) {
   locLon = position.coords.longitude;
   ajaxUV()
   ajaxNearMe()
+  loadLocal()
 }
