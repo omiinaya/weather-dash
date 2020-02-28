@@ -214,13 +214,23 @@ function loadLocal() {
 }
 
 function geolocate() {
-  navigator.geolocation.getCurrentPosition(showPosition);
-}
-
-function showPosition(position) {
-  locLat = position.coords.latitude;
-  locLon = position.coords.longitude;
-  ajaxUV()
-  ajaxNearMe()
-  loadLocal()
+  var successHandler = function(position) { 
+    locLat = position.coords.latitude;
+    locLon = position.coords.longitude;
+    ajaxUV()
+    ajaxNearMe()
+    loadLocal()
+  }; 
+  
+  var errorHandler = function (errorObj) { 
+    locLat = 40.050049;
+    locLon = -84.233276;
+    ajaxUV()
+    ajaxNearMe()
+    loadLocal()
+  }; 
+  
+  navigator.geolocation.getCurrentPosition( 
+  successHandler, errorHandler, 
+  {enableHighAccuracy: true, maximumAge: 10000});
 }
