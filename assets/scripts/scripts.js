@@ -199,16 +199,16 @@ function enterKey() {
 function addLocal() {
   var count = localStorage.length;
   console.log(count);
-  count++;
   localStorage.setItem(count, fixedName);
   loadLocal()
   historyClick()
+  count++;
 }
 
 //loads all items in localData and activates clicking on history items.
 function loadLocal() {
   for (var i=0; i<localStorage.length; i++) {
-  $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
+    $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
   }
   historyClick()
 }
