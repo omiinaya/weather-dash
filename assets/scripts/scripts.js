@@ -21,6 +21,8 @@ var arrHistory = [];
 
 var key = "5495b7f13ab5bdde931c6f4d218ed2e4";
 
+var count;
+
 function pageLoad() {
   geolocate() 
   enterKey()
@@ -119,7 +121,6 @@ function ajaxNearMe() {
     foreData = response;
     locName = response.city.name
     fixInput()
-    $("#cityName").text(fixedName);
     addLocal()
     passData()
 });
@@ -189,7 +190,6 @@ function enterKey() {
       event.preventDefault();
       locName = $("#user-input").val();
       runSearch()
-      loadLocal()
       addLocal()
     }
   });
@@ -197,16 +197,16 @@ function enterKey() {
 
 //adds new items to history and activates clicking on history items.
 function addLocal() {
-  var count = localStorage.length;
   console.log(count);
   localStorage.setItem(count, fixedName);
+  count++;
   loadLocal()
   historyClick()
-  count++;
 }
 
 //loads all items in localData and activates clicking on history items.
 function loadLocal() {
+  count = localStorage.length;
   for (var i=0; i<localStorage.length; i++) {
     $("#history"+i+"").text(localStorage.getItem(localStorage.key(i)));
   }
