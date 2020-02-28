@@ -2,32 +2,53 @@
     width:90;
     text-align: center;
 }
+
 .container {
     margin: auto;
 }
+
+.top-container {
+    text-align: center;
+}
+
 .weather {
     width: 90%;
     text-align: center;
 }
+
 ul > li {
     display: inline-block;
     list-style-type: none;
     padding: 5px;
 }
+
 .forecast {
-    background-color: lightblue;
+    background-color: white;
+    background: rgba(253, 253, 253, 0.6); 
     width: 100%;
     margin-right: 40px;
     padding-top: 20px;
     padding-bottom: 20px;
     border-style: solid;
     border-width: 2px;
-    border-color: gray;
+    border-color:  lightblue;
 }
+
 .history {
     float: left;
     width: 10%;
+    padding-right: 2%;
+    background-color: white;
+    background: rgba(253, 253, 253, 0.6);
+    border-style: solid;
+    border-width: 2px;
+    border-color:  lightblue;
 }
+
 #updateHistory:hover {
     cursor: pointer;
+}
+
+body {
+    background-image: url("../images/background.jpeg");
 }
