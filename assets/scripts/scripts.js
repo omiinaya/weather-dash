@@ -42,9 +42,6 @@ function runSearch() {
   getCoordinates()
   getLocationId()
 
-  //API URLs crafted using the coordinates and location ids we got from before.
-  queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?id=" + locId + "&APPID=" + key;
-
   //run our forecast, uv, and history functions.
   ajaxForecast()
   ajaxUV()
@@ -87,7 +84,7 @@ function getLocationId() {
 
 //gets forecast data from the API in JSON format.
 function ajaxForecast() {
-  if (locId) {
+  var queryURL1 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locLat + "&lon=" + locLon + "&units=imperial&appid=" + key;
     $.ajax({
       url: queryURL1,
       method: "GET"
@@ -96,7 +93,6 @@ function ajaxForecast() {
       foreData = response;
       passData();
     });
-  }
 }
 
 //gets UV data from API in JSON format.
